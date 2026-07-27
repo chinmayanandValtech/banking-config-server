@@ -3,11 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://postgres:5432/account_db
     username: chinmayanand
     password: admin
 
   jpa:
     hibernate:
       ddl-auto: update
-

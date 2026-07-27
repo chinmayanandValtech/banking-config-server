@@ -3,7 +3,6 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://postgres:5432/transaction_db
     username: chinmayanand
     password: admin
 
@@ -14,7 +13,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
 
 management:
   endpoints:
