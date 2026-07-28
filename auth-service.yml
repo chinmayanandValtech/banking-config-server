@@ -1,0 +1,11 @@
+server:
+  port: 0
+
+spring:
+  datasource:
+    username: chinmayanand
+    password: admin
+
+  jpa:
+    hibernate:
+      ddl-auto: update
