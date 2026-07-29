@@ -10,6 +10,6 @@ spring:
     hibernate:
       ddl-auto: update
 
-  jwt:
-    secret: 1CHN1Bi8R0YYkCN6mrDEcys4HHAK3RJqU/1Alp+B1Xg=
-    expiration: 3600000
+jwt:
+  secret: 1CHN1Bi8R0YYkCN6mrDEcys4HHAK3RJqU/1Alp+B1Xg=
+  expiration: 3600000
