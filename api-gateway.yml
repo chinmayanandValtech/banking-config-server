@@ -16,6 +16,10 @@ spring:
           uri: lb://TRANSACTION-SERVICE
           predicates:
             - Path=/api/transactions/**
+        - id: block-customer-internal
+          uri: forward:/__blocked
+          predicates:
+            - Path=/api/customers/internal
         - id: customer-service
           uri: lb://CUSTOMER-SERVICE
           predicates:
