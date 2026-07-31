@@ -1,0 +1,21 @@
+spring:
+  kafka:
+    # Must be 9094 (Kafka's EXTERNAL listener for host-machine clients), not 9092.
+    # 9092 is the INTERNAL listener, only reachable from inside the Docker network.
+    bootstrap-servers: localhost:9094
+
+    consumer:
+      group-id: fraud-group
+      auto-offset-reset: earliest
+
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+            value:
+              default:
+                type: com.bank.fraudservice.event.FraudDetectedEvent
