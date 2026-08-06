@@ -25,6 +25,10 @@ spring:
           uri: lb://ACCOUNT-SERVICE
           predicates:
             - Path=/api/accounts/**
+        - id: account-service-debug
+          uri: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/api/debug/**
         - id: transaction-service
           uri: lb://TRANSACTION-SERVICE
           predicates:
