@@ -1,3 +1,7 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/auth_db
+  data:
+    redis:
+      host: localhost
+      port: 6379
