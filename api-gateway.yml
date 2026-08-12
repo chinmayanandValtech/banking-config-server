@@ -7,65 +7,124 @@ spring:
 
   cloud:
     gateway:
-      cors-configurations:
-        '[/**]':
-          allowedOrigins:
-            - "http://localhost:3000"
-            - "http://localhost:5173"
-          allowedMethods:
-            - GET
-            - POST
-            - PUT
-            - DELETE
-            - PATCH
-            - OPTIONS
-          allowedHeaders: "*"
-          allowCredentials: true
+
+      # ==========================================
+      # Global CORS Configuration
+      # ==========================================
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:3000"
+              - "http://localhost:5173"
+
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+
+            allowedHeaders:
+              - "*"
+
+            allowCredentials: true
+
+            maxAge: 3600
+
+      # ==========================================
+      # API Gateway Routes
+      # ==========================================
       routes:
+
+        # ------------------------------------------
+        # Account Service
+        # ------------------------------------------
         - id: account-service
           uri: lb://ACCOUNT-SERVICE
           predicates:
             - Path=/api/accounts/**
+
+        # ------------------------------------------
+        # Account Service Debug
+        # ------------------------------------------
         - id: account-service-debug
           uri: lb://ACCOUNT-SERVICE
           predicates:
             - Path=/api/debug/**
+
+        # ------------------------------------------
+        # Transaction Service
+        # ------------------------------------------
         - id: transaction-service
           uri: lb://TRANSACTION-SERVICE
           predicates:
             - Path=/api/transactions/**
+
+        # ------------------------------------------
+        # Block Internal Customer Route
+        # ------------------------------------------
         - id: block-customer-internal
           uri: forward:/__blocked
           predicates:
             - Path=/api/customers/internal
+
+        # ------------------------------------------
+        # Customer Service
+        # ------------------------------------------
         - id: customer-service
           uri: lb://CUSTOMER-SERVICE
           predicates:
             - Path=/api/customers/**
+
+        # ------------------------------------------
+        # Auth Service
+        # ------------------------------------------
         - id: auth-service
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/api/auth/**
 
-        # Proxy each service's raw OpenAPI spec, for the aggregated Swagger UI below
+        # ==========================================
+        # Swagger / OpenAPI Routes
+        # ==========================================
+
+        # ------------------------------------------
+        # Account Service OpenAPI
+        # ------------------------------------------
         - id: account-service-docs
           uri: lb://ACCOUNT-SERVICE
           predicates:
             - Path=/account-service/v3/api-docs
           filters:
             - RewritePath=/account-service/v3/api-docs, /v3/api-docs
+
+        # ------------------------------------------
+        # Customer Service OpenAPI
+        # ------------------------------------------
         - id: customer-service-docs
           uri: lb://CUSTOMER-SERVICE
           predicates:
             - Path=/customer-service/v3/api-docs
           filters:
             - RewritePath=/customer-service/v3/api-docs, /v3/api-docs
+
+        # ------------------------------------------
+        # Transaction Service OpenAPI
+        # ------------------------------------------
         - id: transaction-service-docs
           uri: lb://TRANSACTION-SERVICE
           predicates:
             - Path=/transaction-service/v3/api-docs
           filters:
             - RewritePath=/transaction-service/v3/api-docs, /v3/api-docs
+
+        # ------------------------------------------
+        # Auth Service OpenAPI
+        # ------------------------------------------
         - id: auth-service-docs
           uri: lb://AUTH-SERVICE
           predicates:
@@ -73,17 +132,30 @@ spring:
           filters:
             - RewritePath=/auth-service/v3/api-docs, /v3/api-docs
 
+
+# ==========================================
+# Springdoc / Swagger
+# ==========================================
+
 springdoc:
   swagger-ui:
     urls:
       - name: account-service
         url: /account-service/v3/api-docs
+
       - name: customer-service
         url: /customer-service/v3/api-docs
+
       - name: transaction-service
         url: /transaction-service/v3/api-docs
+
       - name: auth-service
         url: /auth-service/v3/api-docs
+
+
+# ==========================================
+# Actuator
+# ==========================================
 
 management:
   endpoints:
