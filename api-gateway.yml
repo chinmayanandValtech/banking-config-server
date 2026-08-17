@@ -163,3 +163,8 @@ management:
     web:
       exposure:
         include: "*"
+
+
+observability:
+  zipkin:
+    base-url: http://zipkin:9411
