@@ -21,7 +21,8 @@ spring:
               - "http://localhost:5173"
               - "https://banking-management-frontend.vercel.app"
               - "https://banking-management-frontend-ghstiv66k.vercel.app"
-
+            allowedOriginPatterns:
+              - "https://*.vercel.app"
             allowedMethods:
               - GET
               - POST
