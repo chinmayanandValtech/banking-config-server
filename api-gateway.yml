@@ -165,7 +165,27 @@ management:
       exposure:
         include: "*"
 
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+
+      # readiness (used by k8s readinessProbe) also requires all downstream
+      # services to be visible in Eureka, not just that the app context
+      # started. liveness is left as just the default liveness state so a
+      # slow/unavailable downstream dependency never causes a pod restart.
+      group:
+        readiness:
+          include: readinessState,downstreamServices
+
 
 observability:
   zipkin:
     base-url: http://zipkin:9411
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    registry-fetch-interval-seconds: 5
